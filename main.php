@@ -10,16 +10,15 @@ require "vendor/autoload.php";
 require_once "eway/eway.class.php";
 
 $NL = "\r\n";
+$LOCAL = "/Volumes/Data HD/Work/Bizztreat/keboola-ex-eWay-api-data-connector/data";
 
 try {
     // read the configuration file
     // LOCALTEST
-    //$dataDir = "/Volumes/Data HD/Work/Bizztreat/keboola-ex-eWay-api-data-connector/data" . DIRECTORY_SEPARATOR;
+    //$dataDir = $LOCAL . DIRECTORY_SEPARATOR;
     $dataDir = getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR;
     $configFile = $dataDir . 'config.json';
     $config = json_decode(file_get_contents($configFile), FILE_USE_INCLUDE_PATH);
-
-    var_dump($config);
 
     $webServiceAddress = $config['parameters']['webServiceAddress'];
     $username = $config['parameters']['username'];
