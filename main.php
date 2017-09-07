@@ -21,9 +21,6 @@ try {
     $passwordAlreadyEncrypted = $config['parameters']['passwordAlreadyEncrypted'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
 
-    echo "Host: " + $webServiceAddress;
-    echo "User: " + $username;
-
     // Create eWay API connector
     $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
 
@@ -50,6 +47,8 @@ try {
             $row[3]
         ]);
     }
+
+    $outFile->writeRow([$webServiceAddress, $username, $password, $passwordAlreadyEncrypted]);
 
 
 } catch (InvalidArgumentException $e) {
