@@ -9,21 +9,29 @@
 require "vendor/autoload.php";
 require_once "eway/eway.class.php";
 
+$NL = "\r\n";
+
 try {
     // read the configuration file
+    // LOCALTEST
+    //$dataDir = "/Volumes/Data HD/Work/Bizztreat/keboola-ex-eWay-api-data-connector/data" . DIRECTORY_SEPARATOR;
     $dataDir = getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR;
     $configFile = $dataDir . 'config.json';
-    $config = json_decode(file_get_contents($configFile), true);
+    $config = json_decode(file_get_contents($configFile), FILE_USE_INCLUDE_PATH);
+
+    var_dump($config);
 
     $webServiceAddress = $config['parameters']['webServiceAddress'];
     $username = $config['parameters']['username'];
-    $password = $config['parameters']['password'];
+    $password = $config['parameters']['#password'];
     $passwordAlreadyEncrypted = $config['parameters']['passwordAlreadyEncrypted'];
     $dieOnItemConflict = $config['parameters']['dieOnItemConflict'];
 
+    echo "host: " . $webServiceAddress . $NL;
+    echo "user: " . $username . $NL;
+
     // Create eWay API connector
     $connector = new eWayConnector($webServiceAddress, $username, $password, $passwordAlreadyEncrypted, $dieOnItemConflict);
-
 
     // create output file and write header
     $outFile = new \Keboola\Csv\CsvFile(
